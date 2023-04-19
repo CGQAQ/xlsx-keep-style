@@ -6,22 +6,13 @@ const workbook = new Excel.Workbook();
 await workbook.xlsx.readFile("template.xlsx");
 
 const worksheet = workbook.getWorksheet(1);
-worksheet.insertRow(["John", "男", 24], "i+");
-worksheet.insertRow(["Jane", "女", 22], "i+");
+worksheet.addRow(["John", "男", 24], "i+");
+worksheet.addRow(["Jane", "女", 22], "i+");
+
+/** @type {import("@nbelyh/exceljs").Table} */
+const table  = worksheet.getTables()[0];
+table.table.tableRef = "A1:C6"
+table.table.autoFilterRef = "A1:C6"
+table.commit();
+
 await workbook.xlsx.writeFile("output.xlsx");
-
-
-
-// const d = sheet_to_json(currentSheet);
-// console.log("sheets", d);
-// sheet_add_json(currentSheet, [
-//         { 'A': 'John', 'B': '男', 'C': 24 },
-//         { 'A': 'Jane', 'B': '女', 'C': 22 }
-//     ], 
-//     {
-//         origin: 'A4',
-//         skipHeader: true,
-//         cellStyles: true,
-//         sheetStubs: true
-//     }
-// )
